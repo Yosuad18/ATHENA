@@ -28,19 +28,18 @@ services:
     depends_on:
       - db
 
-  # 3. BASE DE DATOS (PostgreSQL)
+  # 3. BASE DE DATOS (MySQL)
   db:
-    image: postgres:15-alpine
+    image: mysql:8.0
     container_name: athena-db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: Athena
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: secret
+      MYSQL_DATABASE: Athena
+      MYSQL_ROOT_PASSWORD: secret
     ports:
-      - "5432:5432"
+      - "3306:3306"
     volumes:
-      - athena-db-data:/var/lib/postgresql/data
+      - athena-db-data:/var/lib/mysql
     networks:
       - athena-network
 
