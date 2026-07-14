@@ -1,0 +1,38 @@
+# Dependencias locales (Docker las instalará limpias adentro)
+/vendor
+/node_modules
+
+# Credenciales y archivos de configuración secretos 🔒
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+.dockerignore
+
+# Archivos de caché, sesiones y logs de Laravel
+/storage/framework/cache/data/*
+/storage/framework/views/*.php
+/storage/framework/sessions/*
+/storage/logs/*.log
+/storage/app/public/*
+
+# Herramientas de control de versiones y entornos locales
+.git
+.gitignore
+.wslconfig
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Archivos compilados de frontend local (si usas Vite dentro de Laravel)
+/public/build
+/public/hot
+/public/storage
+
+# Reportes y pruebas
+/tests
+.phpunit.cache
