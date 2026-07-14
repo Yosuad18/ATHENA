@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # 1. FRONTEND (React)
+  frontend:
+    build:
+      context: ./ATHENAreact  # Ruta a la carpeta de tu React
+      dockerfile: Dockerfile
+    container_name: athena-frontend
+    ports:
+      - "8080:80"             # Expone el front en http://localhost:8080
+    networks:
+      - athena-network
+    depends_on:
+      - backend
+
+  # 2. BACKEND (Laravel con PHP-FPM)
+  backend:
+    build:
+      context: ./ATHENAbackend # Ruta a la carpeta de tu Laravel
+      dockerfile: Dockerfile
+    container_name: athena-backend
+    restart: unless-stopped
+    volumes:
+      - ./ATHENAbackend:/var/www  # Sincroniza código en tiempo real para desarrollo
+    env_file:
+      - ./ATHENAbackend/.env     # Lee las variables del backend
+    networks:
+      - athena-network
+    depends_on:
+      - db
+
+  # 3. BASE DE DATOS (PostgreSQL)
+  db:
+    image: postgres:15-alpine
+    container_name: athena-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-athena_db}
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
+    ports:
+      - "5432:5432"           # Expone la BD para que la revises con DBeaver/PgAdmin
+    volumes:
+      - athena-db-data:/var/lib/postgresql/data
+    networks:
+      - athena-network
+
+networks:
+  athena-network:
+    driver: bridge
+
+volumes:
+  athena-db-data:
+    driver: local
