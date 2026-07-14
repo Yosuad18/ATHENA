@@ -4,7 +4,7 @@ services:
   # 1. FRONTEND (React)
   frontend:
     build:
-      context: ./ATHENAreact  # Ruta a la carpeta de tu React
+      context: ./Frontend\ATHENAreact # Ruta a la carpeta de tu React
       dockerfile: Dockerfile
     container_name: athena-frontend
     ports:
@@ -17,14 +17,14 @@ services:
   # 2. BACKEND (Laravel con PHP-FPM)
   backend:
     build:
-      context: ./ATHENAbackend # Ruta a la carpeta de tu Laravel
+      context: ./Backend\Repository-ATHENA-Laravel # Ruta a la carpeta de tu Laravel
       dockerfile: Dockerfile
     container_name: athena-backend
     restart: unless-stopped
     volumes:
-      - ./ATHENAbackend:/var/www  # Sincroniza código en tiempo real para desarrollo
+      - ./Backend\Repository-ATHENA-Laravel:/var/www  # Sincroniza código en tiempo real para desarrollo
     env_file:
-      - ./ATHENAbackend/.env     # Lee las variables del backend
+      - ./Backend\Repository-ATHENA-Laravel/.env     # Lee las variables del backend
     networks:
       - athena-network
     depends_on:
