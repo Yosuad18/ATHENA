@@ -1,14 +1,12 @@
-version: '3.8'
-
 services:
   # 1. FRONTEND (React)
   frontend:
     build:
-      context: ./Frontend\ATHENAreact # Ruta a la carpeta de tu React
+      context: ./Frontend/ATHENAreact
       dockerfile: Dockerfile
     container_name: athena-frontend
     ports:
-      - "8080:80"             # Expone el front en http://localhost:8080
+      - "8080:80"
     networks:
       - athena-network
     depends_on:
@@ -17,14 +15,14 @@ services:
   # 2. BACKEND (Laravel con PHP-FPM)
   backend:
     build:
-      context: ./Backend\Repository-ATHENA-Laravel # Ruta a la carpeta de tu Laravel
+      context: ./Backend/Repository-ATHENA-Laravel
       dockerfile: Dockerfile
     container_name: athena-backend
     restart: unless-stopped
     volumes:
-      - ./Backend\Repository-ATHENA-Laravel:/var/www  # Sincroniza código en tiempo real para desarrollo
+      - ./Backend/Repository-ATHENA-Laravel:/var/www
     env_file:
-      - ./Backend\Repository-ATHENA-Laravel/.env     # Lee las variables del backend
+      - ./Backend/Repository-ATHENA-Laravel/.env
     networks:
       - athena-network
     depends_on:
@@ -36,11 +34,11 @@ services:
     container_name: athena-db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${DB_DATABASE:-athena_db}
-      POSTGRES_USER: ${DB_USERNAME:-postgres}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
+      POSTGRES_DB: Athena
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
     ports:
-      - "5432:5432"           # Expone la BD para que la revises con DBeaver/PgAdmin
+      - "5432:5432"
     volumes:
       - athena-db-data:/var/lib/postgresql/data
     networks:
